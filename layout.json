@@ -15,7 +15,7 @@
     }
   },
   "modeToggle": {
-    "default": "dark"
+    "default": "light"
   },
   "font": {
     "headings": {
@@ -33,7 +33,7 @@
   "tabs": [
     {
       "name": "API Reference",
-      "url": "api"
+      "url": "tes"
     }
   ],
   "navigation": [
@@ -63,13 +63,6 @@
       ]
     },
     {
-      "group": "API Reference",
-      "pages": [
-        "reference/overview",
-        "reference/endpoints"
-      ]
-    },
-    {
       "group": "Contributing",
       "pages": [
         "contributing/guidelines",
@@ -95,6 +88,32 @@
     "github": "https://github.com/nhemerson/mako-code",
     "linkedin": "https://github.com/nhemerson/mako-code",
     "discord": "https://github.com/nhemerson/mako-code"
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
+  },
+  "footer": {
+    "links": [
+      {
+        "title": "Documentation",
+        "links": [
+          { "label": "Getting Started", "url": "/getting-started/quick-start" },
+          { "label": "Contributing", "url": "/contributing" }
+        ]
+      },
+      {
+        "title": "Resources",
+        "links": [
+          { "label": "GitHub", "url": "https://github.com/nhemerson/mako-code" },
+          { "label": "Support", "url": "mailto:hoyt@makocode.com" }
+        ]
+      }
+    ]
   },
   "analytics": {
     "ga4": {
