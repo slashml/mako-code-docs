@@ -1,0 +1,71 @@
+---
+title: 'Installation'
+description: 'How to install Mako Code'
+---
+
+# Installation
+
+This guide will walk you through the process of installing Mako Code for your data analysis needs.
+
+## System Requirements
+
+- Python 3.11+
+- Node.js 20+
+- Docker Desktop (recommended for easiest setup)
+
+## Installation Methods
+
+### Using Docker Compose (Recommended)
+
+The easiest way to get started with Mako Code is using Docker Compose:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/mako-code.git
+cd mako-code
+
+# Build the image
+docker-compose build
+
+# Run the application
+docker-compose up
+```
+
+### Using Make (Mac Only)
+
+Alternatively, on Mac systems you can use the provided Makefile:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/mako-code.git
+cd mako-code
+
+# Setup both frontend and backend dependencies
+make setup
+
+# Run the application (both frontend and backend)
+make run
+```
+
+To run frontend and backend separately:
+
+```bash
+make frontend  # Runs frontend server
+make backend   # Runs backend server
+```
+
+To clean up dependencies and build artifacts:
+
+```bash
+make clean
+```
+
+## Verifying Installation
+
+After installation, the Mako Code interface should be available at:
+- Frontend: http://localhost:3000
+- Backend API documentation: http://localhost:8001/api/docs
+
+## Next Steps
+
+Now that you have Mako Code installed, check out the [Quick Start](./quick-start) guide to learn how to use it.

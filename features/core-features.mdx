@@ -1,0 +1,123 @@
+---
+title: 'Core Features'
+description: 'Overview of the main features of Mako Code'
+---
+
+# Core Features
+
+Mako Code provides a comprehensive set of features to help you analyze data and build data workflows efficiently.
+
+## Interactive Code Editor
+
+Mako Code includes a powerful Monaco-based code editor with:
+
+- Syntax highlighting and multiple language support
+- Real-time code execution environment
+- Smart code completion
+- Keyboard shortcuts for productivity
+- Multiple tabs for organizing your work
+
+## Data Management System
+
+Efficiently manage your datasets with:
+
+- Import functionality for various data formats (primarily Parquet)
+- Dataset preview and exploration tools
+- Column type detection and metadata display
+- Efficient data serialization with Apache Arrow
+- Smart file management with multiple tabs
+
+## Split-Pane Interface
+
+Work efficiently with a beautiful split-pane interface:
+
+- Adjustable views for code, data, and visualizations
+- Left sidebar for functions and documentation
+- Right sidebar for data management
+- Customizable layout to fit your workflow
+
+## Polars Integration
+
+Leverage the power of Polars for data manipulation:
+
+```python
+import polars as pl
+
+# Load a dataset
+df = pl.read_parquet("sales_data.parquet")
+
+# Perform transformations
+result = df.filter(pl.col("revenue") > 1000) \
+           .group_by("region") \
+           .agg([
+               pl.sum("revenue").alias("total_revenue"),
+               pl.count().alias("transaction_count"),
+               pl.mean("customer_satisfaction").alias("avg_satisfaction")
+           ]) \
+           .sort("total_revenue", descending=True)
+
+# Display the result
+print(result)
+```
+
+## Visualization Capabilities
+
+Create beautiful visualizations with Bokeh:
+
+```python
+from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource
+
+# Create a Bokeh figure
+source = ColumnDataSource(result.to_pandas())
+p = figure(title="Revenue by Region", x_range=result["region"].to_list())
+
+# Add a bar chart
+p.vbar(x="region", top="total_revenue", width=0.8, source=source)
+
+# Customize the chart
+p.xaxis.axis_label = "Region"
+p.yaxis.axis_label = "Total Revenue"
+
+# Display the chart
+show(p)
+```
+
+## SQL Support
+
+Write and execute SQL queries against your datasets:
+
+```sql
+-- Example SQL query in Mako Code
+SELECT 
+    region,
+    SUM(revenue) as total_revenue,
+    COUNT(*) as transaction_count,
+    AVG(customer_satisfaction) as avg_satisfaction
+FROM sales_data
+WHERE revenue > 1000
+GROUP BY region
+ORDER BY total_revenue DESC
+```
+
+## Export and Sharing
+
+Easily export your work and share results:
+
+- Export code as Python scripts
+- Save visualizations as HTML or images
+- Export transformed datasets as Parquet files
+- Share analysis workflows with team members
+
+## Keyboard Shortcuts
+
+Boost your productivity with comprehensive keyboard shortcuts:
+
+- `⌘/Ctrl + Enter`: Run current file
+- `⌘/Ctrl + Shift + P`: New Polars file
+- `⌘/Ctrl + Shift + L`: New SQL file
+- `⌘/Ctrl + Shift + B`: New Bokeh visualization
+- `⌘/Ctrl + S`: Save Context File
+- `⌘/Ctrl + E`: Export your current tab script
+- `⌘/Ctrl + Shift + I`: Import data
+- `⌘/Ctrl + D`: Toggle data management sidebar

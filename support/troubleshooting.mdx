@@ -1,0 +1,63 @@
+---
+title: 'Troubleshooting'
+description: 'Common issues and their solutions'
+---
+
+# Troubleshooting
+
+This guide covers common issues you might encounter when using Mako Code and provides solutions to help you resolve them.
+
+## Installation Issues
+
+### Error: Cannot find module
+
+If you encounter an error like `Cannot find module 'xyz'`, try the following:
+
+1. Make sure all dependencies are installed:
+   ```bash
+   npm install
+   ```
+
+2. Clear npm cache and reinstall:
+   ```bash
+   npm cache clean --force
+   npm install
+   ```
+
+### Version Compatibility Issues
+
+Make sure you're using a compatible Node.js version (v14 or later).
+
+## Runtime Errors
+
+### API Connection Failures
+
+If you're experiencing connection issues with the API:
+
+1. Check your internet connection
+2. Verify your API keys are correctly configured
+3. Ensure the API endpoint URLs are correct in your configuration
+
+### Performance Issues
+
+If you're experiencing slow performance:
+
+1. Check your system resources
+2. Consider optimizing your queries
+3. Review your implementation for potential bottlenecks
+
+## Common Error Codes
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| E001 | Authentication failure | Check your API credentials |
+| E002 | Rate limit exceeded | Implement backoff strategy or reduce request frequency |
+| E003 | Invalid input format | Validate your input data before sending |
+
+## Getting Additional Help
+
+If you can't find a solution to your problem here, please:
+
+1. Check our [FAQs](./faqs) page
+2. Join our [Discord community](https://discord.gg/mako-code)
+3. Open an issue on [GitHub](https://github.com/mako-code/mako-code/issues)

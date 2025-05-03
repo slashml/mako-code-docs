@@ -1,0 +1,103 @@
+{
+  "name": "Mako Code",
+  "logo": {
+    "light": "/img/lw-icon-light.svg",
+    "dark": "/img/lw-icon-dark.svg"
+  },
+  "favicon": "/img/lw-icon-dark.svg",
+  "colors": {
+    "primary": "#8957E5",
+    "light": "#8957E5",
+    "dark": "#8957E5",
+    "background": {
+      "light": "#FFFFFF",
+      "dark": "#0D1117"
+    }
+  },
+  "modeToggle": {
+    "default": "dark"
+  },
+  "font": {
+    "headings": {
+      "family": "JetBrains Mono",
+      "weight": 400
+    },
+    "body": {
+      "family": "Inter"
+    }
+  },
+  "topbarCtaButton": {
+    "type": "github",
+    "url": "https://github.com/nhemerson/mako-code"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Introduction",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "group": "Getting Started",
+      "pages": [
+        "getting-started/installation",
+        "getting-started/quick-start"
+      ]
+    },
+    {
+      "group": "Core Concepts",
+      "pages": [
+        "concepts/basic-concepts"
+      ]
+    },
+    {
+      "group": "Features",
+      "pages": [
+        "features/core-features"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api/overview",
+        "api/endpoints"
+      ]
+    },
+    {
+      "group": "Contributing",
+      "pages": [
+        "contributing/guidelines",
+        "contributing/development-setup"
+      ]
+    },
+    {
+      "group": "Support",
+      "pages": [
+        "support/faqs",
+        "support/troubleshooting"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://github.com/nhemerson/mako-code",
+    "github": "https://github.com/nhemerson/mako-code",
+    "linkedin": "https://github.com/nhemerson/mako-code",
+    "discord": "https://github.com/nhemerson/mako-code"
+  },
+  "analytics": {
+    "ga4": {
+      "measurementId": "G-D9BRNSM6DC"
+    }
+  },
+  "integrations": {
+    "posthog": {
+        "apiKey": "phc_S2mHvXUZ2pyunTEbZZMRyzbCaYpHLMd6Bp8FGux0ATa"
+    }
+  }
+}

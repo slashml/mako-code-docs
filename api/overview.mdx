@@ -1,0 +1,118 @@
+---
+title: 'API Overview'
+description: 'Introduction to the Mako Code API'
+---
+
+# API Overview
+
+The Mako Code API provides programmatic access to all Mako Code features. This page provides an overview of the API structure and common patterns.
+
+## Authentication
+
+All API requests require authentication using an API key. You can obtain an API key from your Mako Code dashboard.
+
+```javascript
+const mako = require('mako-code');
+
+// Initialize with API key
+mako.init({
+  apiKey: 'your-api-key'
+});
+```
+
+For REST API calls:
+
+```bash
+curl -H "Authorization: Bearer your-api-key" https://api.mako-code.org/v1/projects
+```
+
+## API Versioning
+
+The Mako Code API is versioned to ensure backward compatibility. The current version is `v1`.
+
+```
+https://api.mako-code.org/v1/
+```
+
+When using the JavaScript SDK, the version is handled automatically.
+
+## Rate Limiting
+
+The API implements rate limiting to prevent abuse. Current limits are:
+
+- 100 requests per minute per API key
+- 5,000 requests per day per API key
+
+If you exceed these limits, you'll receive a `429 Too Many Requests` response.
+
+## Error Handling
+
+The API uses standard HTTP status codes to indicate success or failure:
+
+- 2xx: Success
+- 4xx: Client error (invalid request)
+- 5xx: Server error
+
+Error responses include a JSON body with details:
+
+```json
+{
+  "error": {
+    "code": "invalid_parameter",
+    "message": "The parameter 'name' is required",
+    "details": {
+      "parameter": "name"
+    }
+  }
+}
+```
+
+In the JavaScript SDK, errors are thrown as exceptions:
+
+```javascript
+try {
+  const project = await mako.createProject({
+    // Missing required 'name' parameter
+  });
+} catch (error) {
+  console.error(error.message); // "The parameter 'name' is required"
+  console.error(error.code);    // "invalid_parameter"
+}
+```
+
+## Pagination
+
+List endpoints support pagination using `limit` and `offset` parameters:
+
+```
+GET /projects?limit=10&offset=20
+```
+
+Response includes pagination metadata:
+
+```json
+{
+  "data": [...],
+  "pagination": {
+    "total": 45,
+    "limit": 10,
+    "offset": 20,
+    "next": "/projects?limit=10&offset=30",
+    "previous": "/projects?limit=10&offset=10"
+  }
+}
+```
+
+## Available Endpoints
+
+The API is organized around the following main resources:
+
+- [Projects](./endpoints#projects)
+- [Resources](./endpoints#resources)
+- [Environments](./endpoints#environments)
+- [Deployments](./endpoints#deployments)
+- [Configurations](./endpoints#configurations)
+- [Logs](./endpoints#logs)
+- [Users](./endpoints#users)
+
+For detailed information about each endpoint, see the [Endpoints](./endpoints) documentation.
