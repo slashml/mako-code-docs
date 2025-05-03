@@ -1,0 +1,123 @@
+---
+title: 'API Overview'
+description: 'Introduction to the Mako Code API'
+---
+
+The Mako Code API provides programmatic access to all Mako Code features for data analysis and visualization. This page provides an overview of the API structure and common patterns.
+
+## Base URL
+
+The API is served from:
+
+```
+http://localhost:8000/api
+```
+
+API documentation is available at `/api/docs` in development mode.
+
+## CORS Support
+
+The API supports Cross-Origin Resource Sharing (CORS) for the following origins:
+- http://localhost:5173
+- http://frontend:5173
+- http://localhost:8001
+- http://localhost:8000
+
+## Key Features
+
+### Code Execution
+
+Execute Python code securely with access to data science libraries:
+
+```python
+import polars as pl
+import matplotlib.pyplot as plt
+
+# Load data
+df = pl.read_parquet("data/local_storage/example.parquet")
+
+# Analyze data
+summary = df.describe()
+print(summary)
+
+# Create visualization
+plt.figure(figsize=(10, 6))
+plt.plot(df['x'], df['y'])
+plt.title('Example Plot')
+plt.show()
+```
+
+### SQL Support
+
+Execute SQL queries using the `@sql` directive:
+
+```python
+@sql
+SELECT * FROM example_table LIMIT 10
+```
+
+### Data Management
+
+Upload, list, and manage datasets in various formats (CSV, JSON, Parquet, Arrow).
+
+### User-Defined Functions
+
+Save and reuse functions across your projects with metadata like descriptions and tags.
+
+### Version Control
+
+Automatically track changes to your code with version history and restore capabilities.
+
+## Response Format
+
+Most API endpoints return a consistent JSON format:
+
+```json
+{
+  "success": true,
+  "data": [...],
+  "error": null
+}
+```
+
+Or in case of errors:
+
+```json
+{
+  "success": false,
+  "data": null,
+  "error": "Error message"
+}
+```
+
+## Error Handling
+
+The API uses standard HTTP status codes to indicate success or failure:
+
+- 2xx: Success
+- 4xx: Client error (invalid request)
+- 5xx: Server error
+
+Error responses include details about what went wrong.
+
+## Security
+
+The API implements several security measures:
+
+- Code validation before execution
+- Restricted imports (only allows standard library and approved packages)
+- Prevention of unsafe function calls (like `eval` and `exec`)
+- Linting to catch potential issues
+
+## Available Endpoints
+
+The API is organized around the following main resources:
+
+- [Code Execution](./endpoints#code-execution)
+- [File Operations](./endpoints#file-operations)
+- [Dataset Management](./endpoints#dataset-operations)
+- [User Functions](./endpoints#user-functions)
+- [Version Control](./endpoints#version-control)
+- [Code Analysis](./endpoints#code-analysis)
+
+For detailed information about each endpoint, see the [Endpoints](./endpoints) documentation.

@@ -3,56 +3,143 @@ title: 'Troubleshooting'
 description: 'Common issues and their solutions'
 ---
 
-# Troubleshooting
-
-This guide covers common issues you might encounter when using Mako Code and provides solutions to help you resolve them.
-
 ## Installation Issues
 
-### Error: Cannot find module
+### Docker-related Issues
 
-If you encounter an error like `Cannot find module 'xyz'`, try the following:
+If you're having issues with Docker setup:
 
-1. Make sure all dependencies are installed:
+1. Ensure Docker Desktop is properly installed and running
+2. Try rebuilding the image:
    ```bash
-   npm install
+   docker-compose down
+   docker-compose build --no-cache
+   docker-compose up
    ```
 
-2. Clear npm cache and reinstall:
+### Python Environment Issues
+
+If you're having issues with the Python environment:
+
+1. Make sure you have Python 3.11+ installed:
    ```bash
-   npm cache clean --force
-   npm install
+   python --version
    ```
 
-### Version Compatibility Issues
+2. If using uv package manager:
+   ```bash
+   uv --version
+   # If not installed
+   pip install uv
+   ```
 
-Make sure you're using a compatible Node.js version (v14 or later).
+3. Recreate the virtual environment:
+   ```bash
+   cd backend
+   rm -rf .venv # or venv
+   uv venv .venv # or python -m venv venv
+   source .venv/bin/activate # or venv\Scripts\activate on Windows
+   uv pip install -r requirements.txt # or pip install -r requirements.txt
+   ```
+
+### Frontend Dependency Issues
+
+If you encounter frontend dependency issues:
+
+1. Make sure you're using Node.js 20+:
+   ```bash
+   node --version
+   ```
+
+2. Clean and reinstall dependencies:
+   ```bash
+   cd frontend
+   rm -rf node_modules
+   rm package-lock.json
+   npm install
+   ```
 
 ## Runtime Errors
 
-### API Connection Failures
+### API Connection Issues
 
-If you're experiencing connection issues with the API:
+If you can't connect to the API:
 
-1. Check your internet connection
-2. Verify your API keys are correctly configured
-3. Ensure the API endpoint URLs are correct in your configuration
+1. Check if the API server is running:
+   ```bash
+   curl http://localhost:8001/api/health
+   ```
 
-### Performance Issues
+2. Verify ports aren't being used by other applications
+   ```bash
+   # On Mac/Linux
+   lsof -i :8001
+   
+   # On Windows
+   netstat -ano | findstr :8001
+   ```
 
-If you're experiencing slow performance:
+3. Ensure CORS is properly configured if accessing from a different origin
 
-1. Check your system resources
-2. Consider optimizing your queries
-3. Review your implementation for potential bottlenecks
+### Polars Data Processing Issues
+
+If you're experiencing issues with Polars data processing:
+
+1. Check the Polars version is compatible:
+   ```python
+   import polars as pl
+   print(pl.__version__)
+   ```
+
+2. Ensure your data files are in the supported formats (Parquet, CSV, Arrow)
+
+3. Verify your data schema is consistent
 
 ## Common Error Codes
 
 | Error Code | Description | Solution |
 |------------|-------------|----------|
-| E001 | Authentication failure | Check your API credentials |
-| E002 | Rate limit exceeded | Implement backoff strategy or reduce request frequency |
-| E003 | Invalid input format | Validate your input data before sending |
+| 500 | Internal Server Error | Check backend logs for detailed error information |
+| 404 | Resource Not Found | Verify endpoint URLs and file paths |
+| 422 | Validation Error | Check your request payload matches the expected format |
+| 401 | Unauthorized | Ensure you have proper access rights |
+
+## Getting Additional Help
+
+If you can't find a solution to your problem here, please:
+
+1. Check our [FAQs](./faqs) page
+2. Open an issue on [GitHub](https://github.com/nhemerson/mako-code/issues) with detailed information:
+   - Steps to reproduce
+   - Expected behavior
+   - Actual behavior
+   - Your environment (OS, browser, Docker/Node/Python versions)
+   - Relevant logs
+
+## Backend Logs
+
+To view detailed backend logs:
+
+```bash
+# When running with docker-compose
+docker-compose logs backend
+
+# When running directly
+cd backend
+ENVIRONMENT=development uvicorn main:app --reload --host 0.0.0.0 --port 8001 --log-level debug
+```
+
+## Frontend Logs
+
+To view frontend development logs:
+
+```bash
+cd frontend
+npm run dev -- --debug
+```
+
+Browser console logs can also provide useful information about frontend issues.
+
 
 ## Getting Additional Help
 

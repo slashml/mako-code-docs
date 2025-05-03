@@ -65,8 +65,8 @@
     {
       "group": "API Reference",
       "pages": [
-        "api/overview",
-        "api/endpoints"
+        "reference/overview",
+        "reference/endpoints"
       ]
     },
     {
@@ -81,6 +81,12 @@
       "pages": [
         "support/faqs",
         "support/troubleshooting"
+      ]
+    },
+    {
+      "group": "Releases",
+      "pages": [
+        "releases/changelog"
       ]
     }
   ],

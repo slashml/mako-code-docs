@@ -1,37 +1,41 @@
 ---
-title: 'Contribution Guidelines'
-description: 'Guidelines for contributing to Mako Code'
+title: 'Contributing Guidelines'
+description: 'Learn how to contribute to Mako Code'
 ---
 
-# Contribution Guidelines
+We welcome contributions to Mako Code! This document outlines the process for contributing to the project.
 
-Thank you for your interest in contributing to Mako Code! This document outlines the process for contributing to the project and the standards we expect.
+## Getting Started
+
+1. Fork the repository from [https://github.com/nhemerson/mako-code](https://github.com/nhemerson/mako-code)
+2. Clone your fork locally
+3. Set up your development environment following our [Development Setup](./development-setup) guide
+4. Create a new branch for your feature or bugfix
 
 ## Code of Conduct
 
-We have a [Code of Conduct](https://github.com/mako-code/mako-code/blob/main/CODE_OF_CONDUCT.md) that we expect all contributors to follow. Please read it before contributing.
+We have a Code of Conduct that we expect all contributors to follow. Please read it before contributing.
 
 ## How to Contribute
 
 ### Reporting Bugs
 
-If you find a bug in Mako Code, please report it by creating an issue in our [GitHub repository](https://github.com/mako-code/mako-code/issues). When reporting a bug, please include:
+If you find a bug in Mako Code, please report it by creating an issue in our GitHub repository. When reporting a bug, please include:
 
 - A clear and descriptive title
 - Steps to reproduce the bug
 - Expected behavior
 - Actual behavior
 - Screenshots if applicable
-- Your environment (OS, Node.js version, etc.)
+- Your environment (OS, Python version, Node.js version, etc.)
 
 ### Suggesting Features
 
 We welcome feature suggestions! To suggest a feature:
 
 1. Check if the feature has already been suggested or implemented
-2. Create an issue in our [GitHub repository](https://github.com/mako-code/mako-code/issues)
-3. Use the "Feature Request" template
-4. Provide a clear description of the feature and why it would be valuable
+2. Create an issue in our GitHub repository
+3. Provide a clear description of the feature and why it would be valuable
 
 ### Pull Requests
 
@@ -40,63 +44,72 @@ We welcome pull requests from the community. To submit a pull request:
 1. Fork the repository
 2. Create a new branch for your changes
 3. Make your changes
-4. Write tests for your changes
-5. Run the test suite to ensure all tests pass
-6. Submit a pull request
+4. Test your changes thoroughly
+5. Submit a pull request
 
 Please follow these guidelines for your pull request:
 
 - Keep the scope of your changes focused
 - Follow the coding style of the project
 - Write clear commit messages
-- Include tests for your changes
+- Include tests for your changes when applicable
 - Update documentation as needed
 
 ## Development Process
 
-### Setting Up the Development Environment
-
-See our [Development Setup](./development-setup) guide for instructions on setting up your development environment.
-
 ### Coding Standards
 
-We follow these coding standards:
-
-- Use ESLint with our configuration
-- Follow the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+For the backend:
+- Follow PEP 8 guidelines for Python code
+- Use Ruff for linting Python code
 - Write clear, self-documenting code with appropriate comments
-- Use meaningful variable and function names
+
+For the frontend:
+- Follow the established TypeScript and Svelte patterns in the codebase
+- Use the linting and formatting rules configured in the project
+
+### Tech Stack
+
+Understanding our tech stack will help you contribute effectively:
+
+**Frontend:**
+- SvelteKit
+- Monaco Editor (VS Code's editor)
+- TypeScript
+- Bokeh for interactive visualizations
+
+**Backend:**
+- FastAPI
+- Polars for data processing
+- Ruff for code linting
+- Python standard library
 
 ### Testing
 
-All code changes should include tests. We use:
+When adding new features or fixing bugs, please include tests when applicable:
 
-- Jest for unit tests
-- Cypress for end-to-end tests
-
-Run the test suite with:
-
-```bash
-npm test
-```
+- For backend functionality, add appropriate unit tests
+- For frontend changes, test across different browsers and screen sizes
 
 ### Documentation
 
-If your changes affect the public API or user-facing features, please update the documentation accordingly. Our documentation is written in Markdown and is located in the `docs` directory.
+If your changes affect the API or user-facing features, please update the documentation accordingly. Our documentation is written in Markdown.
 
 ## Review Process
 
 All pull requests will be reviewed by at least one maintainer. The review process includes:
 
-1. Automated checks (linting, tests, etc.)
+1. Automated checks (linting, tests)
 2. Code review by maintainers
 3. Possible requests for changes
 4. Approval and merge
 
-## Becoming a Maintainer
+## After Your PR is Merged
 
-If you're interested in becoming a maintainer, please reach out to the current maintainers. Maintainers are typically chosen from contributors who have made significant and high-quality contributions to the project over time.
+Once your pull request is merged, you will be added to the contributors list. Your contribution will be mentioned in the changelog for the next release.
 
 ## License
 
-By contributing to Mako Code, you agree that your contributions will be licensed under the project's [MIT License](https://github.com/mako-code/mako-code/blob/main/LICENSE).
+By contributing to Mako Code, you agree that your contributions will be licensed under the project's license.
+
+Thank you for contributing to Mako Code!

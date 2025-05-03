@@ -1,0 +1,458 @@
+---
+title: 'API Endpoints'
+description: 'This page documents all available endpoints in the Mako Code API.'
+---
+
+## Base URL
+
+The API is served from the FastAPI application with the following configuration:
+
+```
+http://localhost:8000/api
+```
+
+Documentation is available at `http://localhost:8001/api/docs` in development mode as mentioned in the README.
+
+## CORS Configuration
+
+The API allows requests from the following origins:
+- http://localhost:5173
+- http://frontend:5173
+- http://localhost:8001
+- http://localhost:8000
+
+## Endpoints
+
+### Code Execution
+
+#### Execute Code
+
+```
+POST /execute
+```
+
+Executes Python code and returns the result.
+
+**Request Body:**
+
+```json
+{
+  "code": "print('Hello, world!')"
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "output": "Hello, world!",
+  "error_type": null
+}
+```
+
+If there's an error:
+
+```json
+{
+  "success": false,
+  "output": "Error message",
+  "error_type": "SyntaxError"
+}
+```
+
+### File Operations
+
+#### Upload File
+
+```
+POST /api/upload
+```
+
+Uploads a file (CSV, JSON, Parquet, Arrow) and converts it to Parquet format.
+
+**Form Parameters:**
+- `file`: The file to upload
+- `newFileName`: Name for the uploaded file
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "filename": "example.parquet",
+  "error": null,
+  "fileExists": false
+}
+```
+
+#### Read Parquet
+
+```
+GET /api/read-parquet
+```
+
+Reads a parquet file and returns its contents.
+
+**Query Parameters:**
+- `filename`: Name of the parquet file
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": [{...}, {...}],
+  "rows": 100,
+  "columns": 5
+}
+```
+
+#### List Datasets
+
+```
+GET /api/list-datasets
+```
+
+Lists all available datasets in local storage.
+
+**Response:**
+
+```json
+{
+  "datasets": [
+    {
+      "name": "example",
+      "path": "local_storage/example.parquet",
+      "size": 1024,
+      "modified": 1620000000
+    }
+  ]
+}
+```
+
+#### Delete Dataset
+
+```
+POST /api/delete-dataset
+```
+
+Deletes a dataset and its context file.
+
+**Request Body:**
+
+```json
+{
+  "path": "local_storage/example.parquet"
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true
+}
+```
+
+### Dataset Context
+
+#### Save Dataset Context
+
+```
+POST /api/save-dataset-context
+```
+
+Saves context information for a dataset.
+
+**Request Body:**
+
+```json
+{
+  "dataset_name": "example",
+  "content": "This dataset contains..."
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "message": "Context saved successfully"
+}
+```
+
+#### Get Dataset Context
+
+```
+GET /api/get-dataset-context/{dataset_name}
+```
+
+Retrieves context information for a dataset.
+
+**Response:**
+
+```json
+{
+  "content": "This dataset contains...",
+  "exists": true
+}
+```
+
+### Dataset Operations
+
+#### Get Dataset Data
+
+```
+POST /api/get-dataset-data
+```
+
+Retrieves paginated data from a dataset.
+
+**Request Body:**
+
+```json
+{
+  "path": "data/local_storage/example.parquet",
+  "page": 1,
+  "rows_per_page": 50
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": [{...}, {...}],
+  "columns": ["col1", "col2"],
+  "total_rows": 1000
+}
+```
+
+#### Get Dataset Schema
+
+```
+GET /api/get-dataset-schema/{dataset_name}
+```
+
+Retrieves the schema of a dataset.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "schema": [
+    {"column": "col1", "type": "Int64"},
+    {"column": "col2", "type": "Utf8"}
+  ]
+}
+```
+
+### Code Analysis
+
+#### Lint Code
+
+```
+POST /lint
+```
+
+Analyzes code for errors and style issues.
+
+**Request Body:**
+
+```json
+{
+  "code": "def example():\n    return 'hello'",
+  "line": null,
+  "column": null
+}
+```
+
+**Response:**
+
+```json
+[
+  {
+    "line": 1,
+    "column": 1,
+    "message": "Missing docstring (D100)",
+    "code": "D100"
+  }
+]
+```
+
+### User Functions
+
+#### Save Function
+
+```
+POST /api/save-function
+```
+
+Saves a user-defined function.
+
+**Request Body:**
+
+```json
+{
+  "name": "example_function",
+  "code": "def example_function(x):\n    return x * 2",
+  "description": "Doubles the input",
+  "tags": ["math", "utility"],
+  "language": "python",
+  "isUpdate": false
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "error": null,
+  "function": {
+    "name": "example_function",
+    "code": "def example_function(x):\n    return x * 2",
+    "description": "Doubles the input",
+    "tags": ["math", "utility"],
+    "language": "python",
+    "created_at": "2023-01-01T00:00:00Z",
+    "updated_at": "2023-01-01T00:00:00Z"
+  }
+}
+```
+
+#### List Functions
+
+```
+GET /api/list-functions
+```
+
+Lists all saved user functions.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "error": null,
+  "functions": [
+    {
+      "name": "example_function",
+      "code": "def example_function(x):\n    return x * 2",
+      "description": "Doubles the input",
+      "tags": ["math", "utility"],
+      "language": "python",
+      "created_at": "2023-01-01T00:00:00Z",
+      "updated_at": "2023-01-01T00:00:00Z"
+    }
+  ]
+}
+```
+
+#### Delete Function
+
+```
+DELETE /api/delete-function/{name}
+```
+
+Deletes a user-defined function.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "error": null
+}
+```
+
+### Version Control
+
+#### Save Version
+
+```
+POST /api/save-version
+```
+
+Saves a version of code with metadata.
+
+**Request Body:**
+
+```json
+{
+  "code": "print('Hello')",
+  "tab_name": "Example",
+  "execution_success": true,
+  "output": "Hello"
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "message": "Version saved successfully",
+  "version_path": "data/versions/Example/2023-01-01T00-00-00.py"
+}
+```
+
+#### List Versions
+
+```
+GET /api/list-versions/{tab_name}
+```
+
+Lists all versions for a specific tab.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "message": "Found 5 versions for Example",
+  "versions": [
+    {
+      "timestamp": "2023-01-01T00-00-00",
+      "filename": "2023-01-01T00-00-00.py",
+      "execution_success": true,
+      "output_preview": "Hello"
+    }
+  ]
+}
+```
+
+#### Get Version
+
+```
+GET /api/get-version/{tab_name}/{version_filename}
+```
+
+Retrieves a specific version of code.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "message": "Retrieved version 2023-01-01T00-00-00.py for Example",
+  "code": "print('Hello')"
+}
+```
+
+## Error Handling
+
+The API uses conventional HTTP response codes to indicate the success or failure of an API request.
+
+| Code | Description |
+|------|-------------|
+| 200 | OK - The request was successful |
+| 400 | Bad Request - The request was invalid |
+| 404 | Not Found - The requested resource does not exist |
+| 500 | Server Error - Something went wrong on our end |
+
+Most endpoints return a consistent response format with `success` and `error` fields to indicate the result of the operation.

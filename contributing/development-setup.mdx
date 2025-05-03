@@ -3,65 +3,111 @@ title: 'Development Setup'
 description: 'Setting up your development environment for Mako Code'
 ---
 
-# Development Setup
-
-This guide will help you set up your local development environment to contribute to Mako Code.
-
 ## Prerequisites
 
-- Node.js (v14 or later)
-- npm or yarn
-- Git
+- Python 3.11+
+- Node.js 20+
+- Docker Desktop (recommended for the containerized approach)
+- uv package manager (preferred for Python dependencies)
 
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/mako-code/mako-code.git
+git clone https://github.com/nhemerson/mako-code.git
 cd mako-code
 ```
 
-## Install Dependencies
+## Setup Options
+
+Mako Code offers three ways to set up your development environment:
+
+### 1. Using Docker Compose (Recommended)
+
+This is the simplest approach that ensures consistency across environments:
 
 ```bash
-npm install
-# or
-yarn install
+# Build the image
+docker-compose build
+
+# Run the application
+docker-compose up
 ```
 
-## Development Server
+### 2. Using Make (Mac only)
 
-To start the development server:
+For Mac users, we provide Make commands to simplify setup:
 
 ```bash
+# Setup both frontend and backend dependencies
+make setup
+
+# Run the application (both frontend and backend)
+make run
+
+# To run frontend and backend separately:
+make frontend  # Runs frontend server
+make backend   # Runs backend server
+
+# To clean up dependencies and build artifacts
+make clean
+```
+
+### 3. Manual Setup
+
+For the backend:
+```bash
+cd backend
+uv venv .venv  # Or: python3 -m venv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -r requirements.txt  # Or: pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 8001
+```
+
+For the frontend:
+```bash
+cd frontend
+npm install
 npm run dev
-# or
-yarn dev
+```
+
+## Project Structure
+
+- `backend/`: FastAPI backend with Python code
+  - `main.py`: Entry point for the backend
+  - `functions/`: Backend functionality
+- `frontend/`: SvelteKit frontend with TypeScript
+
+## API Documentation
+
+The backend API documentation will be available at http://localhost:8001/api/docs when running locally.
+
+## Running Tests
+
+If available, run tests with:
+
+```bash
+# For backend tests
+cd backend
+pytest
+
+# For frontend tests
+cd frontend
+npm test
 ```
 
 ## Building for Production
 
+To build the frontend for production:
+
 ```bash
+cd frontend
 npm run build
-# or
-yarn build
 ```
 
-## Running Tests
+Or using Make:
 
 ```bash
-npm test
-# or
-yarn test
-```
-
-## Code Style and Linting
-
-We use ESLint and Prettier to maintain code quality. You can run the linter with:
-
-```bash
-npm run lint
-# or
-yarn lint
+make build
 ```
 
 ## Submitting Changes

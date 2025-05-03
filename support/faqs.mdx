@@ -1,101 +1,132 @@
 ---
-title: 'FAQs'
-description: 'Frequently Asked Questions about Mako Code'
+title: 'Frequently Asked Questions'
+description: 'Common questions about Mako Code'
 ---
-
-# Frequently Asked Questions
 
 ## General Questions
 
 ### What is Mako Code?
 
-Mako Code is a comprehensive development platform that helps teams build, deploy, and manage applications more efficiently. It provides tools for project management, resource orchestration, deployment, monitoring, and more.
+Mako Code is an open source Independent Analytics Environment (IAE) built for data people who love to code. It provides a workflow designed for fast ad hoc analysis with features to let you productize your work.
+
+### What technologies are used in Mako Code?
+
+Mako Code is built with:
+- SvelteKit and TypeScript for the frontend
+- Monaco Editor (VS Code's editor) for code editing
+- FastAPI for the backend
+- Polars for dataframe manipulation
+- Bokeh for data visualization
+- Parquet for local file storage
+- Apache Arrow for data serialization
+- Pydantic data models
+- Ruff for linting
+
+### How can I contribute to Mako Code?
+
+We welcome contributions! Please see our [contributing guidelines](/contributing/guidelines) and [development setup](/contributing/development-setup) documentation.
 
 ### Is Mako Code open source?
 
-Yes, Mako Code is open source and available under the MIT License. You can find the source code on [GitHub](https://github.com/mako-code/mako-code).
-
-### What programming languages does Mako Code support?
-
-Mako Code supports applications written in any programming language. The core SDK is available for JavaScript/TypeScript, Python, and Go, with more language support coming soon.
+Yes, Mako Code is open source. You can find the source code on GitHub.
 
 ## Installation and Setup
 
 ### What are the system requirements for Mako Code?
 
 Mako Code requires:
-- Node.js v14 or later
-- npm or yarn
-- Git
+- Python 3.11+
+- Node.js 20+
+- Docker Desktop (for containerized approach)
+- uv package manager (recommended for Python dependencies)
 
-### How do I update Mako Code to the latest version?
+### How do I set up Mako Code locally?
 
-To update Mako Code, run:
+You have three options:
 
+1. Using Docker Compose (recommended):
 ```bash
-npm update -g mako-code
-# or
-yarn global upgrade mako-code
+docker-compose build
+docker-compose up
 ```
 
-### Can I use Mako Code in a CI/CD pipeline?
+2. Using Make (Mac only):
+```bash
+make setup
+make run
+```
 
-Yes, Mako Code is designed to work well in CI/CD environments. We provide integrations for popular CI/CD platforms like GitHub Actions, GitLab CI, and Jenkins.
+3. Manual setup (see [Development Setup](/contributing/development-setup) for details)
+
+### Where is API documentation available?
+
+The API documentation is available at http://localhost:8001/api/docs when running Mako Code locally.
+
+### Can I use Mako Code on Windows?
+
+Yes, Mako Code can run on Windows using Docker or the manual setup approach. The Make commands are currently Mac-only.
 
 ## Features and Usage
 
-### Does Mako Code support multi-cloud deployments?
+### What datasets formats does Mako Code support?
 
-Yes, Mako Code supports deploying to multiple cloud providers including AWS, Google Cloud, and Azure. You can even deploy the same application to different cloud providers for redundancy.
+Mako Code primarily uses Parquet for local file storage, but it can import data from various formats including CSV, JSON, and Apache Arrow.
 
-### How does Mako Code handle secrets and sensitive information?
+### How do I import data into Mako Code?
 
-Mako Code includes a secure secrets management system that encrypts sensitive information at rest and in transit. Secrets are never stored in plain text and are only decrypted when needed.
+You can import data using the keyboard shortcut `⌘/Ctrl + Shift + I` or through the data management sidebar.
 
-### Can I use Mako Code with my existing applications?
+### Can I use libraries other than Polars?
 
-Yes, Mako Code is designed to work with both new and existing applications. You can gradually adopt Mako Code features for your existing projects.
+Mako Code is built with Polars as the primary dataframe library, but it's designed to be customizable. You can extend it to use other libraries as needed.
 
-### Does Mako Code support database migrations?
+### How does versioning work in Mako Code?
 
-Yes, Mako Code includes tools for managing database schemas and migrations across different environments.
+Mako Code automatically tracks versions of your code, allowing you to revert to previous states and track changes over time.
 
-## Pricing and Support
+## Data Analysis
 
-### Is there a free tier for Mako Code?
+### How do I view my dataset in Mako Code?
 
-Yes, Mako Code offers a free tier that includes basic features suitable for small projects and individual developers.
+After importing a dataset:
+1. Open the data management sidebar with `⌘/Ctrl + D`
+2. Find your dataset in the list
+3. Click the dataset name to view details
+4. Click the menu (⋯) and select "Analyze"
 
-### What kind of support is available for Mako Code?
+### Can I run SQL queries in Mako Code?
 
-We offer multiple support options:
-- Community support through our [Discord server](https://discord.gg/mako-code)
-- Documentation and tutorials
-- Email support for paid plans
-- Priority support with SLAs for enterprise plans
+Yes, Mako Code supports SQL queries with dataset integration. Use `⌘/Ctrl + Shift + L` to create a new SQL file.
 
-### Can I get training for my team on how to use Mako Code?
+### How do I create visualizations?
 
-Yes, we offer training sessions for teams. Please contact our sales team at sales@mako-code.org for more information.
+Use Bokeh for data visualization in Mako Code. Create a new Bokeh visualization with `⌘/Ctrl + Shift + B`.
+
+### Can I share my analysis with others?
+
+You can export your code and visualizations using `⌘/Ctrl + E`. This allows you to share your work with others.
 
 ## Troubleshooting
 
-### I'm getting an "API key invalid" error. What should I do?
+### The API server isn't starting. What should I do?
 
-First, check that you're using the correct API key. If the issue persists, try regenerating your API key in the dashboard. If you're still having problems, please contact support.
+Check port conflicts and ensure the required dependencies are installed. See our [Troubleshooting](./troubleshooting) guide for more details.
 
 ### How do I report a bug in Mako Code?
 
-You can report bugs by creating an issue in our [GitHub repository](https://github.com/mako-code/mako-code/issues). Please include as much detail as possible to help us reproduce and fix the issue.
+You can report bugs by creating an issue on GitHub. Please include detailed steps to reproduce the issue, expected and actual behavior, and your environment details.
 
 ### Where can I find logs for debugging?
 
-Mako Code logs are stored in:
-- Linux/macOS: `~/.mako/logs`
-- Windows: `%USERPROFILE%\.mako\logs`
-
-You can also view logs using the CLI:
-
+Backend logs can be viewed using:
 ```bash
-mako-code logs
+docker-compose logs backend
 ```
+
+Or when running directly:
+```bash
+cd backend
+ENVIRONMENT=development uvicorn main:app --reload --host 0.0.0.0 --port 8001 --log-level debug
+```
+
+Frontend logs are available in your browser's developer console and when running the dev server.
