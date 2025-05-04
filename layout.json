@@ -14,6 +14,12 @@
       "dark": "#0D1117"
     }
   },
+  "redirects": [
+  {
+    "source": "/",
+    "destination": "/index"
+  }
+  ],
   "modeToggle": {
     "default": "light"
   },
@@ -30,12 +36,6 @@
     "type": "github",
     "url": "https://github.com/nhemerson/mako-code"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "tes"
-    }
-  ],
   "navigation": [
     {
       "group": "Introduction",
@@ -60,6 +60,13 @@
       "group": "Features",
       "pages": [
         "features/core-features"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "reference/overview",
+        "reference/endpoints"
       ]
     },
     {

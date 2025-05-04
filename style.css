@@ -1,9 +1,3 @@
-@media screen and (min-width: 1024px) {
-  #navbar {
-    visibility: hidden;
-  }
-}
-
 form {
   font-family: var(--font-inter, sans-serif);
   color: rgb(var(--gray-400));
